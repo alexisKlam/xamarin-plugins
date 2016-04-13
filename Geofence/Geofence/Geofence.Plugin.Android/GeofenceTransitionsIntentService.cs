@@ -127,8 +127,8 @@ namespace Geofence.Plugin
                          }
                        }
                      
-
-                       CreateNotification(context.ApplicationInfo.LoadLabel(context.PackageManager), message);
+                        if(region.ShowNotification)
+                            CreateNotification(context.ApplicationInfo.LoadLabel(context.PackageManager), message);
                     }
 
 
