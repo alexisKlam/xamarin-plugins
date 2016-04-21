@@ -30,7 +30,10 @@ namespace Geofence.Plugin
             Context context = Android.App.Application.Context;
             Bundle extras = intent.Extras;
             Android.Gms.Location.GeofencingEvent geofencingEvent = Android.Gms.Location.GeofencingEvent.FromIntent(intent);
-
+            if (!CrossGeofence.IsInitialized)
+            {
+                return;
+            }
             if (geofencingEvent.HasError)
             {
                 string errorMessage = Android.Gms.Location.GeofenceStatusCodes.GetStatusCodeString(geofencingEvent.ErrorCode);
@@ -125,10 +128,11 @@ namespace Geofence.Plugin
                                break;
 
                          }
-                       }
+                            if (region.ShowNotification)
+                                CreateNotification(context.ApplicationInfo.LoadLabel(context.PackageManager), message);
+                        }
                      
-                        if(region.ShowNotification)
-                            CreateNotification(context.ApplicationInfo.LoadLabel(context.PackageManager), message);
+                       
                     }
 
 
